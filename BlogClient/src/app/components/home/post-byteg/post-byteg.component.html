@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-10">
+      
+      <div class="card blog-post pointer"  *ngFor="let pd of postService.postsByTeg">            
+        <div class="card-body">    
+          <h4 class="card-title">{{pd.PostTitle}}</h4>     
+          <img [src]="pd.Src" alt="Заглавная картинка из поста " height="300">   
+          <div><br></div>      
+          <span class="text-black font-weight-bold anchor" >{{pd.DateCreate | date : "MMM d, y"}}</span>    
+          <span class="text-black font-weight-bold anchor" >  {{pd.Hashtags}} </span>  
+          <h5> Comments:</h5>                          
+              <div class="comment"  *ngFor="let comment of pd.Comments" >
+                      <span>{{comment.DateCreation | date : "MMM d, y"}} </span>
+                      <span>"{{comment.CommentBody}}" </span>    
+                      <span>    by:   {{comment.UserInfo.Login}}  </span>                                    
+              </div>
+          <div  (click)="populateForm(pd)" >  <h5>Continue reading...</h5>  </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  </div>

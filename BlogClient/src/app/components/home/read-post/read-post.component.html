@@ -1,0 +1,37 @@
+<div class="card blog-post pointer"  >    
+  
+    
+
+        <div class="card-body">
+          <h4 class="card-title">{{postService.post.PostTitle}}</h4>
+          <img [src]="postService.post.Src" alt="Заглавная картинка из поста " height="420">   
+              <div><br></div>  
+          <h5 class="card-title"><label [innerHtml]="postService.post.PostBody"></label></h5>  
+          <span class="text-black font-weight-bold anchor" >{{postService.post.DateCreate | date : "MMM d, y"}}</span>    
+          <span class="text-black font-weight-bold anchor" >  {{postService.post.Hashtags}} </span> 
+          <h5>Posted by: {{postService.post.UserInfo.Login}}</h5>      
+          <h5> Comments:</h5> 
+
+                <div class="comment"  *ngFor="let comment of postService.post.Comments" >
+                    <span>{{comment.DateCreation | date : "MMM d, y"}} </span>                    
+                    <span>"{{comment.CommentBody}}"  </span>                     
+                    <span>    by:   {{comment.UserInfo.Login}}  </span>     
+                    <span>
+                      <button class="del-com-button" (click)="OnDeleteComment(comment.Id)"> &times;</button>
+                    </span>                       
+                </div>
+
+                <!--add comment-->
+          <div class="addComments" *ngIf="!AutorizeCheck()">
+              <form #messageForm="ngForm"  #commentInput (ngSubmit)="OnAddComment(CommentText.value);">
+                  <div class="form-group">
+                    <label class="col-form-label">New comment:</label>
+                    <textarea class="add-comment form-control" #CommentText [(ngModel)]="commentText" [ngModelOptions]="{standalone: true}"></textarea>
+                  </div>
+                  <button id="sendButton" type="submit" class="btn btn-info">Add comment</button>
+                </form>
+          </div>
+
+
+        </div>
+    </div>

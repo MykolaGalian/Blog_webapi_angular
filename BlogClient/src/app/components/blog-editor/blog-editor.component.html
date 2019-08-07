@@ -1,0 +1,40 @@
+
+
+<div class="add-post-form jumbotron container text-center">
+  
+  <form #AddPostForm="ngForm"  (ngSubmit)="onSubmit(AddPostForm) ">
+      <div class="add-image">
+      <p *ngIf="imageUrl!=null">
+        <img [src]="imageUrl">
+      </p>
+      <input  class="btn btn-info" type="button" value="Upload picture" onclick="document.getElementById('fileUpload').click();" />
+      <input visibility="hidden" style="display: none;" type="file" id="fileUpload" #Image [ngModelOptions]="{standalone: true}"
+             ngModel accept="image/*" (change)="handleFileInput($event.target.files)" required>
+    </div>    
+    
+    <div class="form-group">
+        <label class="control-label" for="title">Title:</label>
+        <textarea class="form-control" rows="1" #title="ngModel" name="title" (ngModel)="addPost.title" ></textarea>
+      </div>
+
+    <div class="form-group">
+        <label class="control-label" for="body">Body:</label>
+    <quill-editor [style]="editorStyle" [modules]="config"  #body="ngModel" name="body" (ngModel)="addPost.body">  </quill-editor>    
+    </div>
+
+    
+
+    <div class="form-group">
+      <label class="control-label" for="hashtags">#hashtags:</label>
+      <textarea class="form-control" rows="1"  #hashtags="ngModel" name="hashtags" (ngModel)="addPost.hashtags" ></textarea>
+    </div>
+    
+    <input class="btn btn-success" type="submit" [disabled]="fileToUpload==null" id="submit" value="Add new post ">
+  </form>
+</div>
+
+
+
+
+    
+ 

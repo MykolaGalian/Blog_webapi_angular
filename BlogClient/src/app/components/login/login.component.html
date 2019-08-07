@@ -1,0 +1,22 @@
+
+
+<form #form='ngForm' class="mb-4" autocomplete="off" (submit)="onSubmit(form)">
+    
+  <div class="card-image col-md-2 offset-md-6">          
+        <img class="img-fluid" src="assets/img/blog.png" alt="Alternate Text" />
+   </div>
+
+  <div class="form-group col-md-2 offset-md-2">
+    <label>Login</label>
+    <input class="form-control" #Login="ngModel" name="Login" [(ngModel)]="formModel.Login" required>
+  </div>
+  <div class="form-group col-md-2 offset-md-2">
+    <label>Password</label>
+    <input type="password" class="form-control" #Password="ngModel" name="Password" [(ngModel)]="formModel.Password" required>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-2 offset-md-2">
+      <button type="submit" class="btn btn-lg btn-block" [disabled]="form.invalid">Login</button>
+    </div>
+  </div>
+</form>

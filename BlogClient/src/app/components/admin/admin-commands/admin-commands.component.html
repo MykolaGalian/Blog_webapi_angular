@@ -1,0 +1,16 @@
+
+<div class="form-row">
+  <div class="form-group col-md-8">
+    <button class="edit-buttons" (click)="adminService.BlockAccount()">Block account </button>
+    <button class="edit-buttons" (click)="adminService.UnblockAccount()">Unblock account </button> 
+ </div>
+</div>
+
+  
+     <div class="form-row">
+        <div class="form-group col-md-8">
+        <p>User:</p>
+        <input name="Login" #Login="ngModel" [(ngModel)]="service.userDetails.Login" class="form-control"
+               placeholder="Login" disabled>
+      </div>
+     </div>

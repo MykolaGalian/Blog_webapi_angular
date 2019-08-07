@@ -1,0 +1,50 @@
+<nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand text-white">Your profile:  "{{service.userDetails.Login}}" </a>
+        <button class="btn btn-danger my-2 my-sm-0" (click)="addPost()">Add post</button>
+        <button *ngIf="service.userDetails.IsAdmin" class="btn btn-danger my-2 my-sm-0" (click)="userManager()">User manager</button>
+        <button *ngIf="service.userDetails.IsModerator" class="btn btn-danger my-2 my-sm-0" (click)="postModerator()">Post manager</button>
+        <button class="btn btn-danger my-2 my-sm-0" (click)="onProfileEdit()">Edit Profile</button>  
+        <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>        
+</nav>    
+     
+
+
+      <div class="card m-5" style="width:18rem" *ngIf="service.userDetails">
+        <ul class="list-group">
+          <li class="list-group-item"> <img [src]="service.imageUrl"></li>
+
+          <input type="button" value="Upload avatar" onclick="document.getElementById('fileUpload').click();" />
+          <input visibility="hidden" style="display: none;" type="file" id="fileUpload" #Image [ngModelOptions]="{standalone: true}"
+                 ngModel accept="image/*" (change)="handleFileInput($event.target.files)">
+
+          <li class="list-group-item"><strong>Name : </strong>{{service.userDetails.Name}} {{service.userDetails.LastName}}</li>
+          <li class="list-group-item"><strong>Address : </strong>{{service.userDetails.Address}}</li>
+          <li class="list-group-item"><strong>Email : </strong>{{service.userDetails.Email}}</li>
+          <li class="list-group-item"><strong>DateRegistration : </strong>{{service.userDetails.DateRegistration | date : "MMM d, y"}}     </li>  
+          <li class="list-group-item" *ngIf="service.userDetails.IsAdmin"><strong>User Type : Admin</strong></li> 
+          <li class="list-group-item" *ngIf="service.userDetails.IsModerator"><strong>User Type : Moderator</strong></li> 
+        </ul>
+     </div>
+
+        <div class="card blog-post pointer"  *ngFor="let pd of service.userDetails.Posts">            
+          <div class="card-body">    
+
+            <h4 class="card-title">{{pd.PostTitle}}</h4>     
+            <img [src]="pd.Src" alt="Заглавная картинка из поста " height="300">   
+            
+            <div><br></div>  
+
+            <span class="text-black font-weight-bold anchor" >{{pd.DateCreate | date : "MMM d, y"}}</span>    
+            <span class="text-black font-weight-bold anchor" >  {{pd.Hashtags}} </span>
+            <h5> Comments:</h5>
+                <div class="comment"  *ngFor="let comment of pd.Comments" >
+                    <span>{{comment.DateCreation | date : "MMM d, y"}} </span>
+                    <span>"{{comment.CommentBody}}" </span> 
+                    <span>    by:   {{comment.UserInfo.Login}}  </span>                                       
+               </div>
+
+            <div  (click)="populateForms(pd)" >  <h5>Continue reading...</h5>  </div>
+
+          </div>
+      </div>
+      

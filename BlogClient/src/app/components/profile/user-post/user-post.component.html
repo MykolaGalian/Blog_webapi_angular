@@ -1,0 +1,77 @@
+<div class="card blog-post pointer"  >            
+        <div class="card-body">
+
+            <div class="edit-buttons" >
+                <button (click)="postOnEdit=true"> &#9998; </button>
+                <button (click)="OnDeletePost()">&times; </button>
+            </div>
+
+              <div><br></div>
+              <img [src]="postService.post.Src" alt="Заглавная картинка из поста " height="420">   
+              <div><br></div>  
+
+              <!-- Initial Post     -->
+        <div class="initialPost" *ngIf="!postOnEdit">
+          <h4 class="card-title">{{postService.post.PostTitle}}</h4>
+        
+          <h5 class="card-title">    <label [innerHtml]="postService.post.PostBody"></label></h5> 
+          <span class="text-black font-weight-bold anchor" >Post created {{postService.post.DateCreate | date : "MMM d, y"}}</span>   
+          
+          <p *ngIf="postService.post.LastEdit!=null">
+              <span class="text-black font-weight-bold anchor" >Post last edited {{postService.post.LastEdit | date : "MMM d, y"}}</span>   
+          </p>  
+                 
+          <div><br></div>  
+          <span class="text-black font-weight-bold anchor" >  {{postService.post.Hashtags}} </span> 
+          <h5>Posted by: {{postService.post.UserInfo.Login}}</h5>      
+          <div><br></div> 
+          <h5> Comments:</h5>
+                <div class="comment"  *ngFor="let comment of postService.post.Comments" >
+                    <span>{{comment.DateCreation | date : "MMM d, y"}} </span>
+                    <span>"{{comment.CommentBody}}" </span>       
+                    <span>    by:   {{comment.UserInfo.Login}}  </span>   
+                    <span>
+                      <button class="del-com-button" (click)="OnDeleteComment(comment.Id)"> &times;</button>
+                    </span>                                 
+               </div>
+
+                         <!--add comment-->
+          <div class="addComments" >
+              <form #messageForm="ngForm"  #commentInput (ngSubmit)="OnAddComment(CommentText.value);">
+                  <div class="form-group">
+                    <label class="col-form-label">New comment:</label>
+                    <textarea class="add-comment form-control" #CommentText [(ngModel)]="commentText" [ngModelOptions]="{standalone: true}"></textarea>
+                  </div>
+                  <button id="sendButton" type="submit" class="btn btn-info">Add comment</button>
+                </form>
+          </div>
+
+        </div> 
+
+              <!-- Post  edit  -->
+              <form #EditPostForm="ngForm" (ngSubmit)="OnPostEdit(EditPostForm)" *ngIf="postOnEdit">
+                 
+                <div class="form-group">
+                   <label class="control-label" for="PostTitle">Title:</label>
+                     <textarea class="form-control" rows="1" #PostTitle="ngModel" name="PostTitle" [(ngModel)]="postService.post.PostTitle"></textarea>  <!--postService.post.PostTitle -->
+                  </div>
+
+                  <div class="form-group">
+                      <label class="control-label" for="PostBody">Body:</label>
+                  <quill-editor [style]="editorStyle" [modules]="config"  #PostBody="ngModel" name="PostBody" [(ngModel)]="postService.post.PostBody">  </quill-editor>    
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="control-label" for="Hashtags">#hashtags:</label>
+                    <textarea class="form-control" rows="1" name="Hashtags" #Hashtags="ngModel" [(ngModel)]="postService.post.Hashtags"></textarea>
+                  </div>                  
+
+                  <input class="btn btn-danger" type="submit" id="submit" value="Edit">
+                </form>
+
+          
+
+        </div>
+    </div>
+    

@@ -1,0 +1,32 @@
+
+
+
+
+
+    <div class="card blog-post pointer"  *ngFor="let pd of postService.moderPosts">            
+            <div class="card-body">    
+
+              <h4 class="card-title">{{pd.PostTitle}}</h4>
+              <span class="text-black font-weight-bold anchor" > Post blocked: {{pd.IsBlocked}} </span>  
+              <br>
+              <img [src]="pd.Src" alt="Заглавная картинка из поста " height="300">   
+              <br>      
+              <span class="text-black font-weight-bold anchor" >{{pd.DateCreate | date : "MMM d, y"}}</span>    
+              <span class="text-black font-weight-bold anchor" >  {{pd.Hashtags}} </span>                            
+            <br>
+                    <div class="comment"  *ngFor="let comment of pd.Comments" >
+                      <span>{{comment.DateCreation | date : "MMM d, y"}} </span>
+                      <span>"{{comment.CommentBody}}" </span>    
+                      <span>    by:   {{comment.UserInfo.Login}}  </span>  
+                                                      
+                   </div>
+
+            <div class="edit-buttons">       
+                <button (click)="moderService.BlockPost(pd.Id)">Block post</button>
+            </div>
+
+            <div class="edit-buttons">       
+                <button (click)="moderService.UnblockPost(pd.Id)">Unblock post</button>
+            </div>
+          </div>
+        </div>   
