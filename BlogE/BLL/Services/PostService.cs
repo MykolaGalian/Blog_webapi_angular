@@ -89,7 +89,7 @@ namespace BLL.Services
             return AutoMapper.Mapper.Map<IEnumerable<Post>, IEnumerable<DTOPost>>(posts);
         }
 
-        public async Task<IEnumerable<string>> GetAllTeg()
+        public async Task<IEnumerable<string>> GetAllTeg() //выбор всех тегов из сущности post без повторов
         {
             var posts = (await _uow.Posts.SelectAll());
             var tags = from p in posts
